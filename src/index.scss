@@ -16,3 +16,13 @@ body {
   height: 100%;
   min-height: 100%;
 }
+
+.loading-container {
+  width: 100%;
+  text-align: center;
+  margin-top: 2em;
+}
+
+.btn-login {
+  @include button-variant(#fff, rgb(59, 123, 218), rgb(59, 123, 218));
+}

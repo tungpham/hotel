@@ -10,6 +10,7 @@ import {
 import * as guests from "./guests";
 import * as workers from "./workers";
 import * as chats from "./chats";
+import * as auth from "./auth";
 
 const combine = params => ({
   selectors: mapValues(params, param => param.selectors),
@@ -21,7 +22,8 @@ const combine = params => ({
 export const { selectors, queries, actions, reducers } = combine({
   guests,
   workers,
-  chats
+  chats,
+  auth
 });
 
 export default combineReducers({

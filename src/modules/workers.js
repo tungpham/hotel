@@ -21,19 +21,22 @@ export const queries = {
             id: 1,
             name: "Worker 1",
             avatar: randomAvatar(),
-            status: "available"
+            status: "available",
+            phone: "7606 215 500"
           },
           {
             id: 2,
             name: "Worker 2",
             avatar: randomAvatar(),
-            status: "busy"
+            status: "busy",
+            phone: "7606 215 500"
           },
           {
             id: 3,
             name: "Worker 3",
             avatar: randomAvatar(),
-            status: "busy"
+            status: "busy",
+            phone: "7606 215 500"
           }
         ]
       }

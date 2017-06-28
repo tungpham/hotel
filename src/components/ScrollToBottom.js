@@ -18,7 +18,7 @@ export default class ScrollToBottom extends Component {
 
   componentDidUpdate() {
     if (this.shouldScrollBottom) {
-      this.scroll();
+      this.scroll(0);
     }
   }
 
@@ -40,7 +40,7 @@ export default class ScrollToBottom extends Component {
   }
 
   componentDidMount() {
-    this.scroll();
+    this.scroll(0);
   }
 
   render() {

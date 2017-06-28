@@ -3,7 +3,6 @@ import { compose, withProps, withState } from "recompose";
 import { connect } from "react-redux";
 import cx from "classnames";
 import {
-  Badge,
   Card,
   CardHeader,
   CardBlock,
@@ -14,7 +13,7 @@ import {
   NavLink
 } from "reactstrap";
 
-import connectRequest from "lib/connectRequest";
+import connectRequest, { spinnerOnLoading } from "lib/connectRequest";
 import { actions, selectors, queries } from "modules";
 
 import "./Workers.scss";
@@ -52,11 +51,11 @@ export const Navigation = ({ tab, onChangeTab }) =>
     />
   </Nav>;
 
-export const WorkerListItem = ({ id, avatar, name, status }) =>
-  <ListGroupItem className="worker-list-item">
+export const WorkerListItem = ({ id, avatar, name, status, onClick, active }) =>
+  <ListGroupItem className="worker-list-item" active={active}>
     <div>
       <div className="avatar">
-        <img src={avatar} />
+        <img src={avatar} alt="avatar" />
       </div>
       <div>
         <div className="name">{name}</div>
@@ -66,12 +65,12 @@ export const WorkerListItem = ({ id, avatar, name, status }) =>
       </div>
     </div>
     <div className="actions">
-      <i className="fa fa-comment" />
-      <i className="fa fa-phone" />
+      <i className="fa fa-comment" onClick={() => onClick("text")} />
+      <i className="fa fa-phone" onClick={() => onClick("call")} />
     </div>
   </ListGroupItem>;
 
-export const WorkersList = ({ workers, onWorkerClick }) =>
+export const WorkersList = ({ workers, onWorkerClick, currentWorker }) =>
   <ListGroup>
     {workers.map(({ name, status, id, avatar }) =>
       <WorkerListItem
@@ -80,16 +79,22 @@ export const WorkersList = ({ workers, onWorkerClick }) =>
         id={id}
         name={name}
         status={status}
+        onClick={type => onWorkerClick(id, type)}
+        active={currentWorker && currentWorker.id === id}
       />
     )}
   </ListGroup>;
 
-export const Workers = ({ tab, changeTab, workers, openChat }) =>
+export const Workers = ({ tab, changeTab, workers, openChat, currentWorker }) =>
   <Card className="workers">
     <CardHeader>Workers</CardHeader>
     <CardBlock>
       <Navigation tab={tab} onChangeTab={changeTab} />
-      <WorkersList workers={workers} onWorkerClick={openChat} />
+      <WorkersList
+        workers={workers}
+        onWorkerClick={openChat}
+        currentWorker={currentWorker}
+      />
     </CardBlock>
   </Card>;
 
@@ -98,6 +103,7 @@ export const enhance = compose(
   withState("tab", "changeTab", "all"),
   connect(
     (state, props) => ({
+      currentWorker: selectors.chats.getWorker(state),
       workers: selectors.workers.getWorkers(
         state,
         props.tab === "all" ? null : props.tab
@@ -106,7 +112,8 @@ export const enhance = compose(
     {
       openChat: actions.chats.openWorkerChat
     }
-  )
+  ),
+  spinnerOnLoading()
 );
 
 export default enhance(Workers);

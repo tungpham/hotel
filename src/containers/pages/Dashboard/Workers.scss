@@ -46,6 +46,10 @@
 
       &.active {
         background-color: rgba(0, 0, 0, 1/8);
+
+        .available {
+          color: #000;
+        }
       }
 
       .name {

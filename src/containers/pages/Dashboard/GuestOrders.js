@@ -1,9 +1,9 @@
 import React from "react";
-import { Field, reduxForm, formValueSelector } from "redux-form";
-import { compose, branch } from "recompose";
+import { Field, reduxForm, formValueSelector, change } from "redux-form";
+import { compose } from "recompose";
 import { connect } from "react-redux";
-import moment from "moment";
 import Autocomplete from "react-autocomplete";
+import { FormattedRelative } from "react-intl";
 import {
   Badge,
   Card,
@@ -41,7 +41,9 @@ export const GuestOrderItem = ({
     <div className="justify-content-between">
       <div>
         <span className="name">{name}</span>
-        <span className="date">{moment(message.date).format("LL")}</span>
+        <span className="date">
+          <FormattedRelative value={message.date} updateInterval={60 * 1000} />
+        </span>
       </div>
       <div>
         <Favourite
@@ -75,7 +77,7 @@ export const GuestOrderList = ({
   currentGuest,
   onFavourite
 }) =>
-  guests.length == 0
+  guests.length === 0
     ? <div>No guests</div>
     : <ListGroup>
         {guests.map(({ id, name, tags, message, favourite }) =>
@@ -137,9 +139,9 @@ export const GuestOrderSearch = (() => {
 
   const GuestOrderSearch = ({ suggestions, onSelect }) =>
     <Field
-      name="search"
       component={renderAutocomplete}
       items={suggestions}
+      name="search"
       onSelect={onSelect}
     />;
 
@@ -147,20 +149,18 @@ export const GuestOrderSearch = (() => {
 })();
 
 export const GuestOrders = ({
-  guests,
-  search,
-  suggestions,
-  openChat,
   currentGuest,
-  favourite
+  favourite,
+  guests,
+  onSearchSelect,
+  openChat,
+  search,
+  suggestions
 }) =>
   <Card className="guest-orders">
     <CardHeader>Guest Orders</CardHeader>
     <CardBlock>
-      <GuestOrderSearch
-        suggestions={suggestions}
-        onSelect={id => openChat(id)}
-      />
+      <GuestOrderSearch suggestions={suggestions} onSelect={onSearchSelect} />
       <GuestOrderList
         guests={guests}
         onClick={openChat}
@@ -183,10 +183,14 @@ export const enhance = compose(
       search: selector(state, "search"),
       currentGuest: selectors.chats.getGuest(state)
     }),
-    {
-      openChat: actions.chats.openGuestChat,
-      favourite: actions.guests.favourite
-    }
+    dispatch => ({
+      openChat: id => dispatch(actions.chats.openGuestChat(id)),
+      favourite: (id, value) => dispatch(actions.guests.favourite(id, value)),
+      onSearchSelect: id => {
+        dispatch(actions.chats.openGuestChat(id));
+        dispatch(change("guestOrderSearch", "search", ""));
+      }
+    })
   ),
   connectRequest(({ search }) => queries.guests.getGuestOrdersQuery(search))
 );
