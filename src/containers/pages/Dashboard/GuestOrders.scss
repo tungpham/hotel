@@ -1,0 +1,61 @@
+@import "../../../variables.scss";
+
+.guest-orders {
+  .card-block {
+    padding: 0;
+  }
+
+  .search-wrapper {
+    padding: 1.25rem;
+
+    .search {
+      width: 100%;
+    }
+  }
+
+  .list-group {
+    border-radius: 0px;
+    font-size: 0.9em;
+
+    .list-group-item.guest-order {
+      border-radius: 0px;
+      border-top: 0;
+      border-right: 0;
+      border-left: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 1/8);
+      margin: 0;
+      display: block;
+
+      &.active {
+        background-color: rgba(0, 0, 0, 1/8);
+      }
+
+      .name {
+        color: $green;
+        font-size: 1.2em;
+        display: inline-block;
+        min-width: 7em;
+      }
+
+      .date {
+        color: $blue;
+      }
+
+      .message {
+        color: rgb(95, 103, 115);
+      }
+
+      .favourite {
+        color: $light-blue;
+
+        &:hover {
+          color: darken($light-blue, 30%);
+        }
+      }
+
+      > div {
+        display: flex;
+      }
+    }
+  }
+}

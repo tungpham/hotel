@@ -1,0 +1,89 @@
+@import "../../../variables.scss";
+
+.workers {
+  .card-block {
+    padding: 0;
+  }
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    padding: 0.8em;
+    border: 0;
+
+    .nav-item {
+      margin-right: 1em;
+      margin-left: 1em;
+    }
+
+    .nav-link {
+      border: 0px;
+      border-bottom: 2px solid $green;
+
+      &:hover {
+        border-bottom-color: darken($green, 20%);
+      }
+
+      &.active {
+        border-bottom-color: $red;
+      }
+    }
+  }
+
+  .list-group {
+    border-radius: 0px;
+    font-size: 0.9em;
+
+    .list-group-item.worker-list-item {
+      border-radius: 0px;
+      border-top: 0;
+      border-right: 0;
+      border-left: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 1/8);
+      margin: 0;
+      justify-content: space-between;
+      align-items: center;
+
+      &.active {
+        background-color: rgba(0, 0, 0, 1/8);
+      }
+
+      .name {
+        color: $green;
+        font-size: 1.2em;
+        display: inline-block;
+        min-width: 7em;
+      }
+
+      .busy {
+        color: $red;
+      }
+
+      .actions {
+        color: $green;
+        font-size: 1.2em;
+
+        i {
+          margin-right: 0.5em;
+
+          &:hover {
+            color: darken($green, 20%);
+          }
+        }
+      }
+
+      .avatar {
+        margin-right: 1em;
+        img {
+          width: 3em;
+          height: 3em;
+          border-radius: 50%;
+        }
+      }
+
+      > div {
+        display: flex;
+      }
+    }
+  }
+}
