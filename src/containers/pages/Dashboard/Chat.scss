@@ -5,20 +5,20 @@
   height: 100%;
   flex-wrap: wrap;
   align-items: flex-start;
+  flex: 1;
 
   .card {
     flex: 0 0 100%;
     max-height: 50%;
     min-height: 50%;
     width: 100%;
-    overflow-x: scroll;
-    overflow-y: hidden;
   }
   .card-block {
     padding: 0;
     height: 100%;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -60,6 +60,7 @@
 .call-panel {
   width: 100%;
   height: 100%;
+  flex: 1;
   background-color: rgb(19, 19, 19);
   color: white;
   text-align: center;
@@ -121,8 +122,9 @@
 }
 
 .messages-view {
+  flex: 1;
   font-size: 0.85em;
-  max-height: 100%;
+  height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
   background-color: rgba(0, 0, 0, 1/16);
