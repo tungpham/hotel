@@ -30,6 +30,7 @@
     "redux-query": "^2.0.0",
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.5",
+    "serve": "^6.0.0",
     "validator": "^7.1.0",
     "zxcvbn": "^4.4.2"
   },
@@ -73,6 +74,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
+    "now-start": "cd build && serve -s ./",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",

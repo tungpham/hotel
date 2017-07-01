@@ -12,3 +12,14 @@ ReactDOM.render(
   document.getElementById("root")
 );
 registerServiceWorker();
+
+if (module.hot) {
+  module.hot.accept("./containers/Root", () => {
+    const NextRoot = require("./containers/Root").default;
+
+    ReactDOM.render(
+      <NextRoot store={store} history={history} />,
+      document.getElementById("root")
+    );
+  });
+}
