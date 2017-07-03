@@ -8,7 +8,8 @@ export const actions = {
     mutateAsync(queries.signUpMutation(email, password)),
   saveProfile: profile => mutateAsync(queries.saveProfileMutation(profile)),
   saveProfileSettings: settings =>
-    mutateAsync(queries.saveProfileSettingsMutation(settings))
+    mutateAsync(queries.saveProfileSettingsMutation(settings)),
+  signOut: () => mutateAsync(queries.signOutMutation())
 };
 
 export const selectors = {
@@ -61,6 +62,16 @@ export const queries = {
         }
       }
     }
+  }),
+  signOutMutation: () => ({
+    url: "/api/signout",
+    transform: data => ({
+      auth: null
+    }),
+    update: {
+      auth: (prev, next) => next
+    },
+    options: { headers: { fakeResponse: {} } }
   }),
   saveProfileMutation: profile => ({
     url: "/api/profile",

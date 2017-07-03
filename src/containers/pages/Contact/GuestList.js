@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import {
   Badge,
+  Button,
   Card,
   CardHeader,
   CardBlock,
@@ -46,7 +47,13 @@ export const GuestList = ({ guests, redirect, id }) =>
     <CardHeader>
       <div className="d-flex justify-content-between">
         <div>Guests</div>
-        <div onClick={() => redirect("/contact/new")}>+</div>
+        <Button
+          color="darker-primary"
+          size="sm"
+          onClick={() => redirect("/contact/new")}
+        >
+          +
+        </Button>
       </div>
     </CardHeader>
     <CardBlock>

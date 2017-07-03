@@ -102,7 +102,7 @@ export const ChatView = (() => {
               <DropdownToggle caret color="primary">
                 <i className="fa fa-comment" />
               </DropdownToggle>
-              <DropdownMenu>
+              <DropdownMenu className="chat-dropdown">
                 {templates.map(template =>
                   <DropdownItem onClick={() => onSend(template.value)}>
                     {template.label}
@@ -141,7 +141,8 @@ export const ChatView = (() => {
       }
     ),
     reduxForm({
-      form: ({ form }) => form
+      form: ({ form }) => form,
+      initialValues: { messageValue: "" }
     }),
     withState("templateDropdown", "setTemplateDropdown", false),
     withHandlers({
@@ -150,13 +151,18 @@ export const ChatView = (() => {
       onKeyPress: ({ messageValue, onSend }) => e => {
         const { key, shiftKey } = e;
 
-        if (key === "Enter" && !shiftKey && messageValue.trim().length > 0) {
+        if (
+          key === "Enter" &&
+          !shiftKey &&
+          messageValue &&
+          messageValue.trim().length > 0
+        ) {
           onSend(messageValue);
           e.preventDefault();
         }
       },
       onClick: ({ messageValue, onSend }) => () => {
-        if (messageValue.trim().length > 0) {
+        if (messageValue && messageValue.trim().length > 0) {
           onSend(messageValue);
         }
       }

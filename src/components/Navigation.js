@@ -16,7 +16,7 @@ import {
 import { NavLink as RouterLink } from "react-router-dom";
 import { compose, withState, withHandlers, withProps } from "recompose";
 
-import { selectors } from "modules";
+import { actions, selectors } from "modules";
 
 import "./Navigation.scss";
 
@@ -27,7 +27,8 @@ export const Navigation = ({
   isOpen,
   isOpenProfile,
   toggleProfile,
-  user
+  user,
+  signOut
 }) =>
   <Navbar color="primary" light toggleable inverse className="fixed-top">
     <NavbarToggler right onClick={toggle} />
@@ -60,7 +61,7 @@ export const Navigation = ({
                 Profile
               </DropdownItem>
               <DropdownItem divider />
-              <DropdownItem>Logout</DropdownItem>
+              <DropdownItem onClick={() => signOut()}>Logout</DropdownItem>
             </DropdownMenu>
           </NavDropdown>
         </Nav>
@@ -78,9 +79,14 @@ export const enhance = compose(
   withHandlers({
     isOpen: ({ isOpen, setIsOpen }) => () => setIsOpen(isOpen)
   }),
-  connect(state => ({
-    user: selectors.auth.user(state)
-  }))
+  connect(
+    state => ({
+      user: selectors.auth.user(state)
+    }),
+    dispatch => ({
+      signOut: () => dispatch(actions.auth.signOut())
+    })
+  )
 );
 
 export default enhance(Navigation);

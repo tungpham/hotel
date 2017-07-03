@@ -1,5 +1,6 @@
 @import "./variables.scss";
 @import "~bootstrap/scss/bootstrap.scss";
+@import "~tether/src/css/tether.sass";
 
 body, html {
   height: 100%;
@@ -25,4 +26,8 @@ body {
 
 .btn-login {
   @include button-variant(#fff, rgb(59, 123, 218), rgb(59, 123, 218));
+}
+
+.btn-darker-primary {
+  @include button-variant(#fff, darken($brand-primary, 10%), darken($brand-primary, 10%));
 }
