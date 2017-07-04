@@ -28,6 +28,12 @@ export default class ScrollToBottom extends Component {
     const start = node.scrollTop;
     const end = node.scrollHeight - node.offsetHeight + 50;
 
+    if (duration === 0) {
+      node.scrollTop = end;
+
+      return;
+    }
+
     const step = () => {
       const elapsed = Date.now() - clock;
 
