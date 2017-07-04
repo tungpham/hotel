@@ -9,8 +9,6 @@
 
   .card {
     flex: 0 0 100%;
-    max-height: 50%;
-    min-height: 50%;
     width: 100%;
   }
   .card-block {
@@ -55,6 +53,11 @@
       }
     }
   }
+}
+
+.chat-dropdown {
+  right: 0 !important;
+  left: auto !important;
 }
 
 body > .dropdown {

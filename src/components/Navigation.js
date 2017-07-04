@@ -15,6 +15,7 @@ import {
 } from "reactstrap";
 import { NavLink as RouterLink } from "react-router-dom";
 import { compose, withState, withHandlers, withProps } from "recompose";
+import { withRouter } from "react-router";
 
 import { actions, selectors } from "modules";
 
@@ -79,6 +80,7 @@ export const enhance = compose(
   withHandlers({
     isOpen: ({ isOpen, setIsOpen }) => () => setIsOpen(isOpen)
   }),
+  withRouter,
   connect(
     state => ({
       user: selectors.auth.user(state)

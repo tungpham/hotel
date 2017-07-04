@@ -24,6 +24,8 @@ import ScrollToBottom from "components/ScrollToBottom";
 import connectRequest, { spinnerOnLoading } from "lib/connectRequest";
 import { actions, selectors, queries } from "modules";
 
+import { Resize, ResizeVertical } from "react-resize-layout";
+
 import "./Chat.scss";
 
 export const ChatView = (() => {
@@ -98,7 +100,7 @@ export const ChatView = (() => {
             SEND
           </Button>
           {templates &&
-            <ButtonDropdown tether toggle={onToggle} isOpen={templateDropdown}>
+            <ButtonDropdown dropup toggle={onToggle} isOpen={templateDropdown}>
               <DropdownToggle caret color="primary">
                 <i className="fa fa-comment" />
               </DropdownToggle>
@@ -280,13 +282,19 @@ export const GuestsTab = ({ guest }) =>
 
 export const Chat = ({ worker, workers, guest, openChat, endCall }) =>
   <div className="dashboard-column chats">
-    <GuestsTab guest={guest} />
-    <WorkersTab
-      worker={worker}
-      workers={workers}
-      openChat={openChat}
-      endCall={endCall}
-    />
+    <Resize handleWidth="3px" handleColor="#d7d7d7">
+      <ResizeVertical minHeight="200px" height="200px">
+        <GuestsTab guest={guest} />
+      </ResizeVertical>
+      <ResizeVertical minHeight="200px" height="200px">
+        <WorkersTab
+          worker={worker}
+          workers={workers}
+          openChat={openChat}
+          endCall={endCall}
+        />
+      </ResizeVertical>
+    </Resize>
   </div>;
 
 export const enhance = compose(
