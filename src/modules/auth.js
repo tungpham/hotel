@@ -1,5 +1,6 @@
 import { mutateAsync } from "redux-query";
 import randomAvatar from "random-avatar";
+import { createAction, handleActions } from "redux-actions";
 
 export const actions = {
   signIn: (email, password, rememberMe = false) =>
@@ -9,11 +10,12 @@ export const actions = {
   saveProfile: profile => mutateAsync(queries.saveProfileMutation(profile)),
   saveProfileSettings: settings =>
     mutateAsync(queries.saveProfileSettingsMutation(settings)),
-  signOut: () => mutateAsync(queries.signOutMutation())
+  signOut: createAction("SIGN_OUT", () => {}),
+  authenticated: createAction("AUTHENTICATED", auth => (auth)),
 };
 
 export const selectors = {
-  user: state => state.entities.auth
+  user: state => state.auth.user
 };
 
 const defaultData = {
@@ -107,3 +109,20 @@ export const queries = {
     }
   })
 };
+
+export const reducer = handleActions(
+  {
+    [actions.authenticated]: (state, { payload }) => ({
+      ...state,
+      user: payload
+    }),
+    [actions.signOut]: (state) => ({
+      ...state,
+      user: null
+    }),
+  },
+  {
+    user: {},
+  }
+);
+

@@ -5,10 +5,12 @@ import { Route, Redirect } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import Dashboard from "./pages/Dashboard";
 import SignIn from "./pages/SignIn";
+import OAuthCallback from "./pages/OAuthCallback";
 import SignUp from "./pages/SignUp";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
 import ProfileSettings from "./pages/ProfileSettings";
+import { service as AuthService } from "../core/auth";
 
 export const AuthRoute = (() => {
   const AuthRoute = ({
@@ -34,7 +36,7 @@ export const AuthRoute = (() => {
 
   const enhance = connect(state => ({
     key: state.routing.key,
-    authenticated: state.entities.auth != null,
+    authenticated: AuthService.isAuthenticated(),
     location: state.routing
   }));
 
@@ -50,6 +52,7 @@ export const App = () =>
     <AuthRoute path="/contact" component={Contact} />
     <AuthRoute negate path="/login" component={SignIn} exact />
     <AuthRoute negate path="/register" component={SignUp} exact />
+    <AuthRoute negate path="/oauth/callback" component={OAuthCallback} exact />
   </div>;
 
 export default App;
