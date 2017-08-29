@@ -91,7 +91,8 @@ export const AuthForm = ({
   strength,
   remember,
   action,
-  submitting
+  onOpenAuthO,
+  submitting,
 }) =>
   <div className="login-container">
     <div className="login-box">
@@ -128,6 +129,12 @@ export const AuthForm = ({
         <div className="d-flex justify-content-end">
           <Button color="login" disabled={submitting}>
             {action}
+          </Button>
+        </div>
+        <hr/>
+        <div className="d-flex justify-content-end">
+          <Button color="login" onClick={onOpenAuthO} block={true}>
+            Log In with AuthO
           </Button>
         </div>
       </Form>

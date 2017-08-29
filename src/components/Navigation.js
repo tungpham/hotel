@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { push } from "react-router-redux";
 import {
   Collapse,
   Navbar,
@@ -16,6 +17,7 @@ import {
 import { NavLink as RouterLink } from "react-router-dom";
 import { compose, withState, withHandlers, withProps } from "recompose";
 import { withRouter } from "react-router";
+import { service as AuthService } from "../core/auth";
 
 import { actions, selectors } from "modules";
 
@@ -52,7 +54,7 @@ export const Navigation = ({
             <DropdownToggle nav>
               {user.name}
               <img
-                src={user.avatar}
+                src={user.picture}
                 className="avatar rounded-circle"
                 alt="avatar"
               />
@@ -85,9 +87,18 @@ export const enhance = compose(
     state => ({
       user: selectors.auth.user(state)
     }),
-    dispatch => ({
-      signOut: () => dispatch(actions.auth.signOut())
-    })
+    dispatch => {
+      AuthService.getAuthFromAuthO(auth => {
+        dispatch(actions.auth.authenticated(auth));
+      });
+      return {
+        signOut: () => {
+          AuthService.logout();
+          dispatch(actions.auth.signOut());
+          dispatch(push('/login'));
+        }
+      }
+    }
   )
 );
 
