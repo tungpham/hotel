@@ -10,7 +10,7 @@ export const actions = {
   saveProfile: profile => mutateAsync(queries.saveProfileMutation(profile)),
   saveProfileSettings: settings =>
     mutateAsync(queries.saveProfileSettingsMutation(settings)),
-  signOut: createAction("SIGN_OUT", () => {}),
+  signOut: createAction("SIGN_OUT", () => { }),
   authenticated: createAction("AUTHENTICATED", auth => (auth)),
 };
 
@@ -122,7 +122,7 @@ export const reducer = handleActions(
     }),
   },
   {
-    user: {},
+    user: null,
   }
 );
 
