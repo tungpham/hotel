@@ -10,6 +10,14 @@ if (process.env.NODE_ENV === 'development') {
   };
 } else {
   // Prod here
+  config = {
+    domain: process.env.domain,
+    clientID: process.env.clientID,
+    redirectUri: process.env.redirectUri,
+    audience: process.env.audience,
+    responseType: 'token id_token',
+    scope: 'openid profile email phone'
+  }
 }
 
 export default config;
